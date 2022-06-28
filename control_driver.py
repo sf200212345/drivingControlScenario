@@ -5,7 +5,7 @@ from final_window import FinalWindow
 import csv
 import datetime
 
-# create a separate Qwidget class to house all windows
+# Houses all windows
 class WindowManager(QWidget):
     def __init__(self):
         super().__init__()
