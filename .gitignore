@@ -1,0 +1,6 @@
+# unwanted data output files
+controlResults.csv
+
+# videos
+*.mov
+*.mp4
