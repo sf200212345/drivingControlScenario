@@ -80,7 +80,7 @@ class ChangeFileWindow(QWidget):
         outputLayout.addWidget(self.outputName, 1, 0)
         outputLayout.addWidget(outputPrompt1, 2, 0)
         outputLayout.addWidget(self.output, 3, 0)
-        layout.addLayout(outputLayout, 1, 1)
+        layout.addLayout(outputLayout, 0, 2)
 
         # module for setting the control video timestamps
         timestampsLayout = QGridLayout()
@@ -92,7 +92,19 @@ class ChangeFileWindow(QWidget):
         timestampsLayout.addWidget(self.timestampsName, 1, 0)
         timestampsLayout.addWidget(timestampsPrompt1, 2, 0)
         timestampsLayout.addWidget(self.timestamps, 3, 0)
-        layout.addLayout(timestampsLayout, 2, 1)
+        layout.addLayout(timestampsLayout, 1, 1)
+
+        # module for setting the control video timestamps
+        displayTimeLayout = QGridLayout()
+        displayTimePrompt0 = QLabel("Current delay time for button display for the control (no tasks) scenario:")
+        self.displayTimeName = QLabel(self.INFO["displayTime"])
+        displayTimePrompt1 = QLabel("Enter new delay time (must be greater than the minimal interval in timestamps):")
+        self.displayTime = QLineEdit()
+        displayTimeLayout.addWidget(displayTimePrompt0, 0, 0)
+        displayTimeLayout.addWidget(self.displayTimeName, 1, 0)
+        displayTimeLayout.addWidget(displayTimePrompt1, 2, 0)
+        displayTimeLayout.addWidget(self.displayTime, 3, 0)
+        layout.addLayout(displayTimeLayout, 1, 2)
 
         submitLayout = QGridLayout()
         submitPrompt = QLabel("Leave the textbox of fields you don't want to change blank.")
@@ -116,9 +128,14 @@ class ChangeFileWindow(QWidget):
             self.INFO["outputName"] = self.output.text()
             self.output.clear()
             self.outputName.setText(self.INFO["outputName"])
-        
-        with open("fileNames.csv", "w", newline='') as writer:
-                csv.writer(writer).writerow([self.INFO["videoName"], self.INFO["outputName"], "controlTimes.csv"])
+
+        if (len(self.displayTime.text()) > 0):
+            self.INFO["displayTime"] = self.displayTime.text()
+            self.displayTime.clear()
+            self.displayTimeName.setText(self.INFO["displayTime"])
+
+        with open("fileInfo.csv", "w", newline='') as writer:
+                csv.writer(writer).writerow([self.INFO["videoName"], self.INFO["outputName"], "controlTimes.csv", self.INFO["displayTime"]])
 
         if (len(self.timestamps.text()) > 0):
             self.INFO["timestamps"] = self.timestamps.text().split(",")

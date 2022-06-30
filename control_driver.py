@@ -15,7 +15,10 @@ class WindowManager(QWidget):
             "startTime": datetime.datetime.now(),
             "outputName": "",
             "videoName": "",
-            "timestamps": []
+            "timestamps": [],
+
+            # cascade changes to initialization, fileNames, menu
+            "displayTime": ""
         }
         self.initializeINFO()
 
@@ -36,13 +39,12 @@ class WindowManager(QWidget):
         # connect transition buttons to functions in WindowManager
         self.InfoWindow.setReadyButton(self.readyButtonClicked)
         self.InfoWindow.setReadyButton(self.ExperimentWindow.renderVideo)
-        self.InfoWindow.setReadyButton(self.ExperimentWindow.startVideo)
         self.ExperimentWindow.setCompleteButton(self.completeButtonClicked)
         self.ExperimentWindow.setCompleteButton(self.FinalWindow.flushToCSV)
         self.FinalWindow.setReturnToStartButton(self.returnToStartButtonClicked)
 
     def initializeINFO(self):
-        with open("fileNames.csv", newline='') as fileName:
+        with open("fileInfo.csv", newline='') as fileName:
             reader = csv.reader(fileName)
             for row in reader:
                 self.INFO["videoName"] = row[0]
@@ -51,6 +53,7 @@ class WindowManager(QWidget):
                     reader = csv.reader(controlTimes)
                     for i in reader:
                         self.INFO["timestamps"] = i
+                self.INFO["displayTime"] = row[3]
 
     def readyButtonClicked(self):
         self.InfoWindow.setHidden(True)
