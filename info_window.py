@@ -9,7 +9,7 @@ Has an "I'm ready" button to start
 class InfoWindow(QWidget):
     def __init__(self, INFO):
         super().__init__()
-
+        
         layout = QGridLayout()
 
         self.ChangeFileWindow = ChangeFileWindow(INFO)
@@ -94,7 +94,7 @@ class ChangeFileWindow(QWidget):
         timestampsLayout.addWidget(self.timestamps, 3, 0)
         layout.addLayout(timestampsLayout, 1, 1)
 
-        # module for setting the control video timestamps
+        # module for setting the control button display time
         displayTimeLayout = QGridLayout()
         displayTimePrompt0 = QLabel("Current delay time for button display for the control (no tasks) scenario:")
         self.displayTimeName = QLabel(self.INFO["displayTime"])

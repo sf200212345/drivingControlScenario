@@ -9,7 +9,7 @@ Flushes results to csv file
 class FinalWindow(QWidget):
     def __init__(self, INFO):
         super().__init__()
-
+    
         self.INFO = INFO
         layout = QGridLayout()
 

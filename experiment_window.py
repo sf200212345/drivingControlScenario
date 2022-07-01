@@ -12,16 +12,15 @@ Upon button press record the time, store time in INFO["output"]
 class ExperimentWindow(QWidget):
     def __init__(self, INFO):
         super().__init__()
-
+        
         self.INFO = INFO
-
         self.timestamps = []
         self.timestampsLength = 0
         self.clicked = True
-
         self.currTimestamp = 0
 
         layout = QGridLayout()
+
         self.longEmergencyButton = QPushButton("Emergency")
         self.completeButton = QPushButton("Complete")
         
@@ -33,10 +32,10 @@ class ExperimentWindow(QWidget):
         self.video.show()
         
         layout.addWidget(self.video, 0, 0, 3, 4)
-        layout.addWidget(self.longEmergencyButton, 3, 1, 1, 2)
-        layout.addWidget(self.completeButton, 3, 1, 1, 2)
-        layout.addWidget(QWidget(), 0, 3)
-        layout.addWidget(QWidget(), 3, 0)
+        layout.addWidget(self.longEmergencyButton, 3, 1, 1, 1)
+        layout.addWidget(self.completeButton, 1, 1, 2, 2)
+        layout.addWidget(QPushButton(), 3, 3)
+        layout.addWidget(QPushButton(), 3, 0)
         self.setLayout(layout)
 
         self.longEmergencyButton.clicked.connect(self.longEmergencyButtonClicked)
@@ -46,17 +45,21 @@ class ExperimentWindow(QWidget):
     # render video and start on ready button click
     def renderVideo(self):
         self.player.setSource(QUrl.fromLocalFile(self.INFO["videoName"]))
+
         self.video.setHidden(False)
         self.completeButton.setHidden(True)
         self.longEmergencyButton.setHidden(True)
+
         self.clicked = True
         self.currTimestamp = 0
         self.timestamps.clear()
         self.timestampsLength = len(self.INFO["timestamps"])
+
         for i in range(self.timestampsLength):
             self.timestamps.append(int(float(self.INFO["timestamps"][i]) * 1000))
             self.timestamps.append(int((float(self.INFO["timestamps"][i]) + float(self.INFO["displayTime"])) * 1000))
         self.timestampsLength = len(self.timestamps)
+        
         self.player.play()
         self.INFO["startTime"] = datetime.datetime.now()
         
@@ -74,6 +77,7 @@ class ExperimentWindow(QWidget):
             if (self.clicked):
                 self.clicked = False
                 self.longEmergencyButton.setHidden(False)
+            # if emergency button wasn't clicked in the interval
             else:
                 self.clicked = True
                 self.longEmergencyButton.setHidden(True)
