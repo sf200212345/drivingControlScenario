@@ -1,4 +1,4 @@
 # drivingControlScenario
-Testing scenario without trivial tasks for the autonomous driving experiment
+Version deprecated. Was previously the testing scenario without trivial tasks for the autonomous driving experiment.
 
-Some code reuse from [drivingTestProgram](https://github.com/sf200212345/drivingTestProgram)
+Current program can be found at https://github.com/sf200212345/drivingTestProgram
